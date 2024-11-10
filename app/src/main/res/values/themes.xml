@@ -1,0 +1,4 @@
+<resources>
+
+    <style name="Theme.Cuentos" parent="Theme.AppCompat.DayNight.NoActionBar" />
+</resources>
