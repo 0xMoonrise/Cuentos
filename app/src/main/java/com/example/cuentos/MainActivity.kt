@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
             override fun onAnimationEnd(animation: Animator) {
                 super.onAnimationEnd(animation)
                 loadVideo(currentVideo)
-               val resetAnimator = ObjectAnimator.ofFloat(curtain, "translationY", 0f, -curtainHeight)
+                val resetAnimator = ObjectAnimator.ofFloat(curtain, "translationY", 0f, -curtainHeight)
                 resetAnimator.duration = 1000
                 resetAnimator.start()
             }
@@ -129,6 +129,25 @@ class MainActivity : ComponentActivity() {
             }
             return true
         }
+        if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT || keyCode == KeyEvent.KEYCODE_DPAD_RIGHT) {
+            if (videoView.isPlaying) {
+
+                playButton.clearFocus()
+                restartButton.clearFocus()
+                changeVideoButton.clearFocus()
+
+                val currentPosition = videoView.currentPosition
+                val newPosition = if (keyCode == KeyEvent.KEYCODE_DPAD_LEFT) {
+                    (currentPosition - 10000).coerceAtLeast(0)
+                } else {
+                    (currentPosition + 10000).coerceAtMost(videoView.duration)
+                }
+
+                videoView.seekTo(newPosition)
+                return true
+            }
+        }
+
         return super.onKeyDown(keyCode, event)
+        }
     }
-}
